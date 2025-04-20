@@ -8,7 +8,9 @@ nav.navbar {
   z-index: 100;
   background-color: white; 
 }
-
+.nav-logo img{
+  height: 40px;
+}
 .navbar .nav-menu {
   display: flex;
   gap: 2rem;
