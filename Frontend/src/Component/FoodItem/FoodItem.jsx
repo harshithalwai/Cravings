@@ -1,14 +1,49 @@
-import React from "react";
+import React, { useState } from "react";
 import "./FoodItem.css";
 import { assets } from "../../assets/frontend_assets/assets";
 
 const FoodItem = ({ food }) => {
+  const [foodCount, setFoodCount] = useState(0);
   return (
     <>
       <div className="food-item" id="food-item">
         <div className="food-item-img-cont">
           <img src={food.image} alt={food.name} />
+
+          {!foodCount ? (
+
+            <img
+              className="food-item-add"
+              onClick={() => {
+                setFoodCount((prev) => prev + 1);
+              }}
+              src={assets.add_icon_white}
+              alt="Add Item"
+            />
+
+          ) : (
+            <div className="food-item-counter">
+              <img
+                onClick={() => {
+                  setFoodCount((prev) => prev + 1);
+                }}
+                src={assets.add_icon_green}
+                alt="Increase item"
+              />
+
+              {foodCount}
+
+              <img
+                onClick={() => {
+                  setFoodCount((prev) => prev - 1);
+                }}
+                src={assets.remove_icon_red}
+                alt="remove item"
+              />
+            </div>
+          )}
         </div>
+
         <div className="food-item-info">
           <div className="food-item-name-rating">
             <h3>{food.name}</h3>
@@ -19,7 +54,8 @@ const FoodItem = ({ food }) => {
           </div>
           <div className="food-item-price">
             <p>₹ {food.price}</p>
-          </div></div>
+          </div>
+        </div>
       </div>
     </>
   );
