@@ -41,11 +41,28 @@
 .food-item-img-cont {
   position: relative;
 }
-img.food-item-add{
+img.food-item-add {
   width: 30px;
   position: absolute;
   bottom: 15px;
   right: 15px;
   z-index: 1;
-  
+}
+.food-item-counter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  position: absolute;
+  bottom: 15px;
+  right: 15px;
+  padding: 10px;
+  background-color: white;
+  border-radius: 50px;
+  color: tomato;
+  font-weight: 600;
+}
+.food-item-counter img {
+  width: 30px;
+  z-index: 1;
 }
