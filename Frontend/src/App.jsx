@@ -4,6 +4,7 @@ import Navbar from './Component/Navbar/Navbar.jsx'
 import Home from "./Pages/Home/Home.jsx"
 import Cart from './Pages/Cart/Cart.jsx'
 import PlaceOrder from './Pages/PlaceOrder/PlaceOrder.jsx'
+import Footer from './Component/Footer/Footer.jsx'
 
 const App = () => {
   return (
@@ -16,6 +17,7 @@ const App = () => {
           <Route path="/placeorder" element={<PlaceOrder />} />
         </Routes>
       </div>
+      <Footer />
     </>
   )
 }

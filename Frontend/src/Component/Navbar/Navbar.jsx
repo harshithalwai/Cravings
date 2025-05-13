@@ -1,66 +1,47 @@
 import React, { useState } from "react";
+import { assets } from "../../assets/frontend_assets/assets";
 import "./Navbar.css";
-import { assets } from "../../assets/frontend_assets/assets.js";
-
 const Navbar = () => {
-  const [menu, setMenu] = useState("home");
-  return (
-    <>
-      <nav className="navbar">
-        <div className="nav-logo">
-          <img src={assets.logo} alt="Carvings" />
-        </div>
-
-        <ul className="nav-menu">
-          <li
-            onClick={() => {
-              setMenu("home");
-            }}
-            className={menu === "home" ? "active" : ""}
-          >
-            <a href="#">Home</a>
-          </li>
-
-          <li
-            onClick={() => {
-              setMenu("menu");
-            }}
-            className={menu === "menu" ? "active" : ""}
-          >
-            <a href="#">Menu</a>
-          </li>
-
-          <li
-            onClick={() => {
-              setMenu("mobile-apps");
-            }}
-            className={menu === "mobile-apps" ? "active" : ""}
-          >
-            <a href="#">Mobile Apps</a>
-          </li>
-
-          <li
-            onClick={() => {
-              setMenu("contact-us");
-            }}
-            className={menu === "contact-us" ? "active" : ""}
-          >
-            <a href="#">Contact Us</a>
-          </li>
-        </ul>
-
-
-        <div className="nav-right">
-          <img src={assets.search_icon} alt="Search Icon" className='nav-search' />
-          <div className="navbar-cart">
-            <img src={assets.basket_icon} alt="" />
-            <div className="dot"></div>
-          </div>
-          <button className="signin">Sign In</button>
-        </div>
-      </nav>
-    </>
-  );
+    const [menu, setMenu] = useState("home");
+    return (
+        <nav className="navbar">
+            <img src={assets.logo} alt="Cravings" className="logo" />
+            <ul className="navbar-menu">
+                <li
+                    onClick={() => setMenu("home")}
+                    className={menu === "home" ? "active" : ""}
+                >
+                    <a href="/">Home</a>
+                </li>
+                <li
+                    onClick={() => setMenu("menu")}
+                    className={menu === "menu" ? "active" : ""}
+                >
+                    <a href="#explore-menu">Menu</a>
+                </li>
+                <li
+                    onClick={() => setMenu("mobile-app")}
+                    className={menu === "mobile-app" ? "active" : ""}
+                >
+                    <a href="#app-download">Mobile Apps</a>
+                </li>
+                <li
+                    onClick={() => setMenu("contact-us")}
+                    className={menu === "contact-us" ? "active" : ""}
+                >
+                    <a href="#footer">Contact Us</a>
+                </li>
+            </ul>
+            <div className="navbar-right">
+                <img src={assets.search_icon} alt="Search Bar" />
+                <div className="navbar-search-icon">
+                    <img src={assets.basket_icon} alt="Basket" />
+                    <div className="dot"></div>
+                </div>
+                <button>Sign in </button>
+            </div>
+        </nav>
+    );
 };
 
 export default Navbar;

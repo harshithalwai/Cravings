@@ -1,68 +1,58 @@
-import React, { useState } from "react";
-import "./FoodItem.css";
+import React, { useContext, useState } from "react";
 import { assets } from "../../assets/frontend_assets/assets";
-
+import "./FoodItem.css";
+import { StoreContext } from "../../context/storeContext";
 const FoodItem = ({ food }) => {
-  const [foodCount, setFoodCount] = useState(0);
-  return (
-    <>
-      <div className="food-item" id="food-item">
-        <div className="food-item-img-cont">
-          <img src={food.image} alt={food.name} />
-
-          {!foodCount ? (
-            <img
-              className="food-item-add"
-              onClick={() => {
-                setFoodCount((prev) => prev + 1);
-              }}
-              src={assets.add_icon_white}
-              alt="Add Item"
-            />
-          ) : (
-            <div className="food-item-counter">
-              <img
-                onClick={() => {
-                  setFoodCount((prev) => prev - 1);
-                }}
-                src={assets.remove_icon_red}
-                alt="remove item"
-              />
-              {foodCount}
-              <img
-                onClick={() => {
-                  setFoodCount((prev) => prev + 1);
-                }}
-                src={assets.add_icon_green}
-                alt="Increase item"
-              />
+    const [itemCount, setItemCount] = useState(0);
+    const { cartItem, addToCart, removeCartItem } = useContext(StoreContext)
+    return (
+        <>
+            <div className="food-item">
+                <div className="food-item-img-container">
+                    <img src={food.image} alt="" className="food-item-img" />
+                    {!cartItem[food._id] ? (
+                        <img
+                            className="add"
+                            onClick={() => {
+                                // setItemCount(itemCount + 1);
+                                addToCart(food._id)
+                            }}
+                            src={assets.add_icon_white}
+                            alt="Add"
+                        />
+                    ) : (
+                        <div className="food-item-counter">
+                            <img
+                                onClick={() => {
+                                    // setItemCount(prev => prev - 1);
+                                    removeCartItem(food._id)
+                                }}
+                                src={assets.remove_icon_red}
+                                alt=""
+                            />
+                            <p>{cartItem[food._id]}</p>
+                            <img
+                                onClick={() => {
+                                    // setItemCount(prev => prev + 1);
+                                    addToCart(food._id)
+                                }}
+                                src={assets.add_icon_green}
+                                alt=""
+                            />
+                        </div>
+                    )}
+                </div>
+                <div className="food-item-info">
+                    <div className="food-item-name-rating">
+                        <p>{food.name}</p>
+                        <img src={assets.rating_stars} alt="" />
+                    </div>
+                    <p className="food-item-desc">{food.description}</p>
+                    <p className="food-item-price">&#8377; {food.price}</p>
+                </div>
             </div>
-          )}
-        </div>
-
-        <div className="food-item-info">
-          <div className="food-item-name-rating">
-            <h3>{food.name}</h3>
-            <img src={assets.rating_stars} alt="Stars" />
-          </div>
-          <div className="food-item-description">
-            <p>{food.description}</p>
-          </div>
-          <div className="food-item-price">
-            <p>₹ {food.price}</p>
-          </div>
-        </div>
-      </div>
-    </>
-  );
+        </>
+    );
 };
 
 export default FoodItem;
-//     {
-//         _id: "1",
-//         name: "Greek salad",
-//         image: food_1,
-//         price: 12,
-//         description: "Food provides essential nutrients for overall health and well-being",
-//         category: "Salad"
-//     },

@@ -1,52 +1,70 @@
 .header {
-  height: 35vw;
+  min-height: 34vw;
   margin: 30px auto;
-  /* background: url("./header_img.png") ;
-    background-size: contain; */
   position: relative;
-  /* border-radius: 10px; */
 }
 .header::before {
   content: "";
   position: absolute;
+  background: url("./header_img.png") no-repeat center center/contain;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: url("/header_img.png"); /* ✅ No ./public, just / */
-  background-size: cover; /* or contain, depending on your design */
-  background-repeat: no-repeat;
   z-index: -1;
 }
-
-.header .header-contains {
+.header-container {
   position: absolute;
-  max-width: 50%;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: start;
   gap: 1.5vw;
-  bottom: 10%;
+  max-width: 50%;
   left: 6vw;
-  animation: fadeIn 3s ease-in-out;
-}
-
-.header-contains h1 {
+  bottom: 10%;
   color: white;
-  font-weight: 500;
-  font-size: max(4.5vw, 23px);
+  animation: fadeIn 3s ease-out;
 }
-.header-contains p {
-  color: white;
-  font-size: max(1vw, 13px);
+.header-container h1 {
+  font-size: max(4.5vw, 22px);
+  font-weight: 600;
 }
-.header button {
+.header-container p {
+  font-size: 1.1vw;
+}
+.header-container button {
   border: none;
-  padding: 1vw 2.3vw;
   background-color: white;
   font-size: max(1vw, 13px);
-  font-weight: 500;
+  padding: 1vw 2.3vw;
   color: #747474;
-  border-radius: 50px;
   cursor: pointer;
+  border-radius: 50px;
+}
+
+@media screen and (max-width: 1050px) {
+  .header {
+    height: 38vw;
+  }
+ 
+}
+@media screen and (max-width: 860px) {
+  .header-container {
+    max-width: 55%;
+  bottom: 15%;
+  }
+  .header-container p {
+    font-size: .9vw;
+  }
+  .header-container button {
+    padding: 2vw 4vw;
+  }
+}
+@media screen and (max-width: 560px){
+   .header-container h1{
+    font-size: 4.5vw;
+   }
+ .header-container p{
+  display: none;
+ }
 }
