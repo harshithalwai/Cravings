@@ -1,4 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap");
+
+/* css  */
+
 * {
   padding: 0;
   margin: 0;
@@ -22,6 +25,25 @@ a {
   width: 80%;
   margin: 0 auto;
 }
+
+/* Scroll bar  */
+
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: tomato; 
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #f0f0f0;
+}
+
+
+/* animation */
+
 @keyframes fadeIn {
   0% {
     opacity: 0;
