@@ -10,7 +10,7 @@ nav.navbar {
 }
 
 .navbar .logo {
-  width: 150px;
+  width: 8rem;
 }
 
 .navbar .navbar-menu {
@@ -63,9 +63,9 @@ nav.navbar {
 }
 
 @media screen and (max-width: 1050px) {
-  .navbar .logo {
+  /* .navbar .logo {
     width: 140px;
-  }
+  } */
 
   .navbar-menu {
     gap: 20px;
@@ -77,7 +77,7 @@ nav.navbar {
   }
 
   .navbar-right img {
-    width: 22px;
+    width: 1.2rem;
   }
 
   .navbar-right button {
@@ -86,9 +86,9 @@ nav.navbar {
 }
 
 @media screen and (max-width: 900px) {
-  .navbar .logo {
+  /* .navbar .logo {
     width: 120px;
-  }
+  } */
 
   .navbar-menu {
     gap: 15px;
@@ -100,7 +100,7 @@ nav.navbar {
   }
 
   .navbar-right img {
-    width: 22px;
+    width: 1.2rem;
   }
 
   .navbar-right button {
@@ -112,5 +112,10 @@ nav.navbar {
 @media screen and (max-width: 850px) {
   .navbar-menu {
     display: none !important;
+  }
+}
+@media screen and (max-width: 420px) {
+  .navbar .logo{
+    width: 5.5rem;
   }
 }

@@ -48,6 +48,9 @@
 .footer-content-left > img {
   width: 10rem;
 }
+.footer-content-left p{
+  text-align: justify;
+}
 @media screen and (max-width: 1050px){
 .footer-content{
   grid-template-columns: 1fr;

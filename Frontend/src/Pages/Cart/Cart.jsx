@@ -1,11 +1,76 @@
-import React from 'react'
+import React, { useContext } from "react";
+import "./Cart.css";
+import { StoreContext } from "../../context/storeContext.jsx"
+
 
 const Cart = () => {
+  const { cartItem, food_list, removeCartItem } = useContext(StoreContext);
   return (
-    <div>
-      cart
-    </div>
-  )
-}
+    <>
+      <div className="cart">
+        <div className="cart-items">
+          <div className="cart-items-title">
+            <p>Item</p>
+            <p>Title</p>
+            <p>Price</p>
+            <p>Quantity</p>
+            <p>Total </p>
+            <p>Remove</p>
+          </div>
+          <hr />
+          {food_list.map((food) => {
+            if (cartItem[food._id]) {
+              return (
+                <div className="cart-items-title cart-item" key={food._id}>
+                  <img src={food.image} alt={food.name} />
+                  <p>{food.name}</p>
+                  <p>&#8377; {food.price}</p>
+                  <p>{cartItem[food._id]}</p>
+                  <p>&#8377; {food.price * cartItem[food._id]}</p>
+                  <span onClick={() => removeCartItem(food._id)} className="removeBtn">X</span>
+                </div>
+              )
+            }
+          })}
+        </div>
+        <div className="cart-bottom">
+          <div className="cart-total">
+            <h1>Cart Total </h1>
+            <div className="cart-total-details">
+              <div className="details">
+                <p>Subtotal</p>
+                <p>&#8377; {" "}
+                  {
+                    food_list.reduce((acc, food) => {
+                      if (cartItem[food._id]) {
+                        return acc + food.price * cartItem[food._id];
+                      }
+                      return acc;
+                    }, 0)}
+                </p>
+              </div>
+              <div className="details">
+                <p>Delivery fee</p>
+                <p>&#8377; 30</p>
+              </div>
+              <div className="total">
+                <h4>Total</h4>
+                <p>&#8377; 0</p>
+              </div>
+              <button className="checkoutBtn">PROCEED TO CHECKOUT</button>
+            </div>
+          </div>
+          <div className="cart-promo-code">
+            <span>If You have a PROMO CODE , Enter Here </span>
+            <div className="promo-inp-submit">
+              <input type="text" name="promo" id="promo" placeholder="Your Promo Code " />
+              <button className="promo-submit-btn">Submit</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+};
 
-export default Cart
+export default Cart;

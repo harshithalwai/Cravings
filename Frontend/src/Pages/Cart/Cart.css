@@ -1,0 +1,110 @@
+.cart {
+  margin-top: 2rem;
+}
+.cart-items-title {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr 1fr 1fr 1fr 0.5fr;
+  align-items: center;
+  color: grey;
+  font-size: max(1vw, 12px);
+  margin-bottom: 1rem;
+}
+.cart-item {
+  margin-top: 1rem;
+  padding-bottom: 1rem;
+  color: black;
+  border-bottom: 2px solid #e2e2e2;
+}
+.cart-item img {
+  width: 6vw;
+  border-radius: 1.1rem 0 1.1rem 1.1rem;
+}
+.cart-item .removeBtn {
+  cursor: pointer;
+}
+.cart-bottom {
+  margin-top: 5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.cart-total {
+  width: 45%;
+}
+.cart-total-details {
+  margin-top: 1.3rem;
+  display: flex;
+  flex-direction: column;
+}
+.cart-total-details .details {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid #e2e2e2;
+  padding: 0.5rem 0;
+  color: #767676;
+}
+.cart-total-details .total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 0;
+}
+.checkoutBtn {
+  background-color: tomato;
+  border: none;
+  color: white;
+  padding: 1rem;
+  margin-top: 10px;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  width: max(15vw, 200px);
+  font-size: max(1vw, 12px);
+}
+.cart-promo-code .promo-inp-submit {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+  background-color: #eaeaea;
+  border-radius: 4px;
+}
+.cart-promo-code {
+  width: 45%;
+}
+.promo-inp-submit input {
+  width: 100%;
+  border: none;
+  background: transparent;
+  outline: none;
+  font-size: 1rem;
+  padding: 5px;
+  padding-left: 10px;
+}
+.promo-inp-submit button {
+  width: max(10vw, 150px);
+  font-size: 1rem;
+
+  border: none;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+  padding: 12px 5px;
+  background-color: black;
+}
+.cart-promo-code span {
+  color: #555;
+}
+
+@media screen and (max-width: 750px) {
+  .cart-total {
+    width: 100%;
+  }
+  .cart-promo-code {
+    width: 100%;
+    margin-bottom: 2rem;
+  }
+  .cart-bottom {
+    flex-direction: column-reverse;
+  }
+}
