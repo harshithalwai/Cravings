@@ -1,10 +1,19 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import "./Cart.css";
-import { StoreContext } from "../../context/storeContext.jsx"
-
+import { StoreContext } from "../../context/storeContext.jsx";
+import { useNavigate } from "react-router-dom";
 
 const Cart = () => {
-  const { cartItem, food_list, removeCartItem } = useContext(StoreContext);
+  const navigate = useNavigate();
+  const { cartItem, food_list, removeCartItem, getCartTotal } = useContext(StoreContext);
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, []);
+  const hasItems = Object.values(cartItem).some((qty) => qty > 0);
+  if (!hasItems) {
+    navigate("/");
+  }
+
   return (
     <>
       <div className="cart">
@@ -26,10 +35,15 @@ const Cart = () => {
                   <p>{food.name}</p>
                   <p>&#8377; {food.price}</p>
                   <p>{cartItem[food._id]}</p>
-                  <p>&#8377; {food.price * cartItem[food._id]}</p>
-                  <span onClick={() => removeCartItem(food._id)} className="removeBtn">X</span>
+                  <p>&#8377; {getCartTotal()}</p>
+                  <span
+                    onClick={() => removeCartItem(food._id)}
+                    className="removeBtn"
+                  >
+                    X
+                  </span>
                 </div>
-              )
+              );
             }
           })}
         </div>
@@ -39,15 +53,7 @@ const Cart = () => {
             <div className="cart-total-details">
               <div className="details">
                 <p>Subtotal</p>
-                <p>&#8377; {" "}
-                  {
-                    food_list.reduce((acc, food) => {
-                      if (cartItem[food._id]) {
-                        return acc + food.price * cartItem[food._id];
-                      }
-                      return acc;
-                    }, 0)}
-                </p>
+                <p>&#8377; {getCartTotal()}</p>
               </div>
               <div className="details">
                 <p>Delivery fee</p>
@@ -55,15 +61,29 @@ const Cart = () => {
               </div>
               <div className="total">
                 <h4>Total</h4>
-                <p>&#8377; 0</p>
+                <p>&#8377;
+                  {getCartTotal() + 30}
+                </p>
               </div>
-              <button className="checkoutBtn">PROCEED TO CHECKOUT</button>
+              <button
+                onClick={() => {
+                  navigate("/order");
+                }}
+                className="checkoutBtn"
+              >
+                PROCEED TO CHECKOUT
+              </button>
             </div>
           </div>
           <div className="cart-promo-code">
             <span>If You have a PROMO CODE , Enter Here </span>
             <div className="promo-inp-submit">
-              <input type="text" name="promo" id="promo" placeholder="Your Promo Code " />
+              <input
+                type="text"
+                name="promo"
+                id="promo"
+                placeholder="Your Promo Code "
+              />
               <button className="promo-submit-btn">Submit</button>
             </div>
           </div>

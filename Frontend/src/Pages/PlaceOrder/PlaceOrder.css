@@ -1,0 +1,69 @@
+.placeorder {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 3rem;
+}
+.placeorder h1{
+font-weight: 600;
+}
+.placeorder .placeOrder-left {
+  width: 50%;
+}
+.placeorder .placeOrder-left .order-details {
+  margin-top: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 1rem;
+}
+.order-details .inp {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+.order-details .inp input{
+  width: 100%;
+  border: 1px solid #c5c5c5;
+  font-size: 1.1rem;
+  border-radius: 4px;
+  padding: 10px;
+  outline-color: tomato;
+}
+.placeorder .placeOrder-right {
+  width: 40%;
+}
+
+.placeOrder-right .cart-total {
+  width: 100%;
+}
+.placeOrder-right .cart-total .cart-total-details {
+  margin-top: 1.3rem;
+  display: flex;
+  flex-direction: column;
+}
+.placeOrder-right .cart-total-details .details {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid #e2e2e2;
+  padding: 0.5rem 0;
+  color: #767676;
+}
+.placeOrder-right .cart-total-details .total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 0;
+}
+.placeOrder-right .PaymentBtn {
+  background-color: tomato;
+  border: none;
+  color: white;
+  padding: 1rem;
+  margin-top: 10px;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  width: max(15vw, 200px);
+  font-size: max(1vw, 12px);
+}
