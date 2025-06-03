@@ -1,0 +1,24 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 2rem;
+  position: sticky;
+  top: 0;
+  background-color: white;
+  border-bottom: 2px solid #eaeaea;
+}
+.admin-left img {
+  width: 8rem;
+}
+.admin-right .img {
+  width: 4rem;
+  height: 4rem;
+  border-radius: 50%;
+}
+.admin-right .img img{
+  width: 4rem;
+  height: 4rem;
+  border-radius: 50%;
+}
+
