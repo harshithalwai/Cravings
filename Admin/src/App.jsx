@@ -1,5 +1,6 @@
 import React from 'react'
 import { Routes, Route } from 'react-router-dom'
+import {ToastContainer} from 'react-toastify'
 import Sidebar from './components/Sidebar/Sidebar'
 import Navbar from './components/Navbar/Navbar'
 import Add from './pages/Add/Add'
@@ -19,6 +20,8 @@ const App = () => {
           </Routes>
         </div>
       </div>
+      <ToastContainer position="top-right" autoClose={3000} />
+
     </>
   )
 }

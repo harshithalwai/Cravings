@@ -1,0 +1,101 @@
+import userModel from "../models/userModel.js";
+import jwt from "jsonwebtoken";
+import bcrypt from "bcrypt";
+import validator from "validator";
+
+const generateToken = (userId) => {
+  return jwt.sign({ id: userId }, process.env.JWT_SECRET, {
+    expiresIn: "1h",
+  });
+};
+
+const RegisterUser = async (req, res) => {
+  const { name, email, password } = req.body;
+  if (!name.trim() || !email.trim() || !password.trim()) {
+    return res.status(400).json({
+      message: "All fields are required",
+      success: false,
+    });
+  }
+  const existUser = await userModel.findOne({ email });
+  if (existUser) {
+    return res.status(400).json({
+      message: "User already exists",
+      success: false,
+    });
+  }
+  if (!validator.isEmail(email)) {
+    return res.status(400).json({
+      message: "Invalid email format",
+      sucess: false,
+    });
+  }
+  if (password.length < 8) {
+    return res.status(400).json({
+      message: "Password must be between 8 and 20 characters",
+      success: false,
+    });
+  }
+  bcrypt.genSalt(12, function (err, salt) {
+    bcrypt.hash(password, salt, async function (err, hash) {
+      const user = await userModel.create({
+        name,
+        email,
+        password: hash,
+      });
+      const token = generateToken(user._id);
+      res.status(201).json({
+        sucess: true,
+        message: "User registered successfully",
+        token,
+      });
+    });
+  });
+};
+
+
+const LoginUser = async (req, res) => {
+
+  const { email, password } = req.body;
+
+  if (!email.trim() || !password.trim()) {
+    return res.status(400).json({
+      message: "All fields are required",
+      success: false,
+    });
+  }
+
+  const user = await userModel.findOne({ email });
+
+  if (!user) {
+    return res.status(400).json({
+      message: "User does not exist",
+      success: false,
+    });
+  }
+
+  bcrypt.compare(password, user.password, function (err, result) {
+    if (err) {
+      return res.status(500).json({
+        message: "Invalid credientials",
+        success: false,
+      });
+    }
+
+    if (!result) {
+      return res.status(400).json({
+        message: "Invalid credientials",
+        success: false,
+      });
+    }
+
+    const token = generateToken(user._id);
+    res.status(200).json({
+      success: true,
+      message: "User logged in successfully",
+      token,
+    });
+  });
+};
+
+export { RegisterUser, LoginUser };

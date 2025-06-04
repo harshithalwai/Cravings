@@ -1,0 +1,96 @@
+/* Wrapper for responsiveness */
+.table-wrapper {
+  overflow-x: auto;
+  width: 100%;
+}
+
+/* Basic Table Styling */
+.list-table {
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: collapse;
+  box-sizing: border-box;
+  min-width: 600px;
+}
+
+thead {
+  background-color: #f9f9f9;
+}
+
+table{
+  border: 1px solid #cacaca;
+  text-align: center;
+  padding: 1rem;
+  box-sizing: border-box;
+}
+tr{
+  border: 1px solid #cacaca;
+
+}
+/* Grid Layout */
+.list-table thead tr,
+.list-table tbody tr {
+  display: grid;
+  grid-template-columns: 0.5fr 2fr 1fr 1fr 0.5fr;
+}
+
+/* Header & Body Cells */
+.list-table th,
+.list-table td {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.8rem;
+  box-sizing: border-box;
+}
+
+/* Image Styling */
+.list-table img {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+/* Delete Button */
+.dlt-btn {
+  padding: 0.5rem 0.8rem;
+  font-size: 0.9rem;
+  background-color: #d9534f;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+  font-weight: 600;
+}
+
+.dlt-btn:hover {
+  background-color: #c9302c;
+}
+
+/* Responsive Grid Columns */
+@media (max-width: 800px) {
+  .list-table thead tr,
+  .list-table tbody tr {
+grid-template-columns: 0.5fr .5fr .5fr .5fr;
+  }
+
+
+  .list-table th:nth-child(3),
+  .list-table td:nth-child(3) {
+    display: none;
+  }
+}
+
+/* @media (max-width: 480px) {
+  .list-table thead tr,
+  .list-table tbody tr {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .list-table th:nth-child(3),
+  .list-table td:nth-child(3) {
+    display: none; /* Hide category */
+  }
+} */

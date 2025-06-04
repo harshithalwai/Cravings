@@ -26,6 +26,10 @@
   background-color: #fff0ed;
   border-color: tomato;
 }
+.remove_img{
+  width: 20px;
+  height: 20px;
+}
 @media screen and (max-width: 768px) {
   .sidebar-option p {
     display: none;

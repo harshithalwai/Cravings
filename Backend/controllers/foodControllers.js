@@ -1,7 +1,7 @@
 import { log } from "console";
 import foodModel from "../models/foodModel.js";
 import fs from "fs";
-
+import path from "path";
 const allFood = async (req, res) => {
   try {
     const foods = await foodModel.find({});
@@ -50,7 +50,7 @@ const addFood = async (req, res) => {
         if (err) {
           console.error("Error deleting file:", err);
         }
-      }); // Delete the uploaded file if there's an error
+      }); // Deleting the uploaded file if there's an error
     }
     res.status(500).json({
       message: "Error adding food item",
@@ -83,4 +83,30 @@ const removeItem = async (req, res) => {
     success: true,
   });
 };
-export { addFood, allFood, removeItem };
+
+const removeAll = async (req, res) => {
+  await foodModel.deleteMany({}); // If you're using MongoDB
+
+  fs.readdir("uploads/", (err, files) => {
+    if (err) {
+      console.error("Error reading directory:", err);
+      return res.status(500).json({ success: false, message: "Failed to read uploads folder" });
+    }
+
+    files.forEach((file) => {
+      const filePath = path.join( "uploads", file); // ✅ Correct full path
+
+      fs.unlink(filePath, (err) => {
+        if (err) {
+          console.error("Error deleting file:", file, err);
+        }
+      });
+    });
+
+    res.status(200).json({
+      message: "Food items removed successfully",
+      success: true,
+    });
+  });
+};
+export { addFood, allFood, removeItem, removeAll };

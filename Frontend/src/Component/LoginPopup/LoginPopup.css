@@ -6,6 +6,9 @@
   display: grid;
   position: fixed;
 }
+.login-popup input{
+  font-size: 1rem;
+}
 .login-popup-container {
   background-color: white;
   place-self: center;
@@ -59,6 +62,7 @@
     width: 15px;
     height: 15px;
     cursor: pointer;
+
 
 }
 .login-popup-condition label{

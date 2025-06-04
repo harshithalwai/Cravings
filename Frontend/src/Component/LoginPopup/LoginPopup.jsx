@@ -1,12 +1,30 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import "./LoginPopup.css";
 import { assets } from "../../assets/frontend_assets/assets";
+import { StoreContext } from "../../context/storeContext";
 const LoginPopup = ({ setShowLogin }) => {
+  const { BACKEND_URL } = useContext(StoreContext);
   const [currentState, setCurrentState] = useState("Sign Up");
+  const [data, setData] = useState({
+    name: "",
+    email: "",
+    password: "",
+  })
+  const handelChange = (e) => {
+    const { name, value } = e.target;
+    setData((prev) => ({
+      ...prev,
+      [name]: value
+    }))
+  }
+  const submitHandler=async(e)=>{
+    e.preventDefault();
+
+  }
   return (
     <>
       <div className="login-popup">
-        <form action="#" className="login-popup-container">
+        <form onSubmit={submitHandler} className="login-popup-container">
           <div className="login-popup-title">
             <h2>{currentState}</h2>
             <img
@@ -21,6 +39,8 @@ const LoginPopup = ({ setShowLogin }) => {
           <div className="login-popup-input">
             {currentState === "Sign Up" && (
               <input
+                value={data.name}
+                onChange={handelChange}
                 type="text"
                 placeholder="Name"
                 name="name"
@@ -30,6 +50,8 @@ const LoginPopup = ({ setShowLogin }) => {
             )}
 
             <input
+              value={data.email}
+              onChange={handelChange}
               type="email"
               placeholder="E-Mail"
               name="email"
@@ -37,6 +59,8 @@ const LoginPopup = ({ setShowLogin }) => {
               required
             />
             <input
+              value={data.password}
+              onChange={handelChange}
               type="password"
               placeholder="Password"
               name="password"
@@ -45,7 +69,7 @@ const LoginPopup = ({ setShowLogin }) => {
             />
           </div>
 
-          <button>
+          <button type="submit">
             {currentState === "Sign Up" ? "Create Account" : "Login"}
           </button>
 

@@ -3,6 +3,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import connectDB from "./config/DB.js";
 import foodRouter from "./routes/foodRoute.js";
+import userRouter from "./routes/userRoute.js";
 
 // App Config
 const app = express();
@@ -48,5 +49,6 @@ connectDB();
 
 // Routes
 app.use("/food", foodRouter);
+app.use("/user", userRouter);
 
 export default app;
