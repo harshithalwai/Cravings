@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 
 const Cart = () => {
   const navigate = useNavigate();
-  const { cartItem, food_list, removeCartItem, getCartTotal } = useContext(StoreContext);
+  const { cartItem, food_list, removeCartItem, getCartTotal,  BACKEND_URL } = useContext(StoreContext);
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, []);
@@ -13,7 +13,10 @@ const Cart = () => {
   if (!hasItems) {
     navigate("/");
   }
-
+useEffect(()=>{
+  console.log("Cart Items: ", cartItem);
+  
+},[cartItem, food_list])
   return (
     <>
       <div className="cart">
@@ -31,7 +34,7 @@ const Cart = () => {
             if (cartItem[food._id]) {
               return (
                 <div className="cart-items-title cart-item" key={food._id}>
-                  <img src={food.image} alt={food.name} />
+                  <img src={`${BACKEND_URL}/images/${food.image}`} alt={food.name} />
                   <p>{food.name}</p>
                   <p>&#8377; {food.price}</p>
                   <p>{cartItem[food._id]}</p>

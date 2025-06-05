@@ -2,8 +2,11 @@ import React, { useState, useContext } from "react";
 import "./LoginPopup.css";
 import { assets } from "../../assets/frontend_assets/assets";
 import { StoreContext } from "../../context/storeContext";
+import axios from "axios";
+import { toast } from 'react-toastify';
+
 const LoginPopup = ({ setShowLogin }) => {
-  const { BACKEND_URL } = useContext(StoreContext);
+  const { BACKEND_URL, token, setToken } = useContext(StoreContext);
   const [currentState, setCurrentState] = useState("Sign Up");
   const [data, setData] = useState({
     name: "",
@@ -17,9 +20,20 @@ const LoginPopup = ({ setShowLogin }) => {
       [name]: value
     }))
   }
-  const submitHandler=async(e)=>{
+  const submitHandler = async (e) => {
     e.preventDefault();
+    const newURL = currentState === "Sign Up" ? `${BACKEND_URL}/user/register` : `${BACKEND_URL}/user/login`;
+    const responce = await axios.post(newURL, data);
 
+    if (responce.data.success) {
+      setToken(responce.data.token);
+      localStorage.setItem("token", responce.data.token);
+      setShowLogin(false);
+      toast.success(responce.data.message);
+    }
+    else {
+      toast.error(responce.data.message);
+    }
   }
   return (
     <>

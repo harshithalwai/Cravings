@@ -56,6 +56,21 @@ tr{
 .dlt-btn {
   padding: 0.5rem 0.8rem;
   font-size: 0.9rem;
+  background-color: black;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+  font-weight: 600;
+}
+.action-btns{
+  display: flex;
+  gap: 0.5rem;
+}
+.action-btns .edit-btn{
+    padding: 0.5rem 0.8rem;
+  font-size: 0.9rem;
   background-color: #d9534f;
   color: white;
   border: none;
@@ -64,11 +79,9 @@ tr{
   transition: background-color 0.2s ease-in-out;
   font-weight: 600;
 }
-
-.dlt-btn:hover {
+.action-btns .edit-btn:hover {
   background-color: #c9302c;
 }
-
 /* Responsive Grid Columns */
 @media (max-width: 800px) {
   .list-table thead tr,

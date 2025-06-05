@@ -6,6 +6,7 @@ import Navbar from './components/Navbar/Navbar'
 import Add from './pages/Add/Add'
 import List from './pages/List/List'
 import Order from './pages/Order/Order'
+import Edit from './pages/Edit/Edit'
 const App = () => {
   return (
     <>
@@ -17,6 +18,7 @@ const App = () => {
             <Route path="/add" element={<Add />} />
             <Route path="/list" element={<List />} />
             <Route path="/order" element={<Order />} />
+            <Route path="/edit" element={<Edit />} />
           </Routes>
         </div>
       </div>

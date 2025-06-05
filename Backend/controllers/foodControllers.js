@@ -1,4 +1,3 @@
-import { log } from "console";
 import foodModel from "../models/foodModel.js";
 import fs from "fs";
 import path from "path";
@@ -24,7 +23,7 @@ const addFood = async (req, res) => {
     const { name, description, price, category } = req.body;
     const image = req.file ? req.file.filename : null;
     if (!name || !description || !price || !category || !image) {
-      return res.status(400).json({
+      return res.json({
         message: "All fields are required",
         success: false,
       });
@@ -59,7 +58,29 @@ const addFood = async (req, res) => {
     });
   }
 };
-
+const editItem = async (req, res) => {
+  const { name, description, price, category } = req.body;
+  const image = req.file ? req.file.filename : null;
+  const foodId = req.params.id;
+  if (!name || !description || !price || !category || !image) {
+    return res.json({
+      message: "Kindly update the fields !",
+      success: false,
+    });
+  }
+  const food = await foodModel.findById(foodId);
+  if (!food) {
+    return res.json({
+      message: "Food item not found",
+      success: false,
+    });
+  }
+  await foodModel.findByIdAndUpdate(foodId, req.body, { new: true });
+  res.status(200).json({
+    message: "Food item updated successfully",
+    success: true,
+  });
+};
 const removeItem = async (req, res) => {
   const foodId = req.params.id;
   const foodItem = await foodModel.findById(foodId);
@@ -90,11 +111,13 @@ const removeAll = async (req, res) => {
   fs.readdir("uploads/", (err, files) => {
     if (err) {
       console.error("Error reading directory:", err);
-      return res.status(500).json({ success: false, message: "Failed to read uploads folder" });
+      return res
+        .status(500)
+        .json({ success: false, message: "Failed to read uploads folder" });
     }
 
     files.forEach((file) => {
-      const filePath = path.join( "uploads", file); // ✅ Correct full path
+      const filePath = path.join("uploads", file); // ✅ Correct full path
 
       fs.unlink(filePath, (err) => {
         if (err) {
@@ -109,4 +132,4 @@ const removeAll = async (req, res) => {
     });
   });
 };
-export { addFood, allFood, removeItem, removeAll };
+export { addFood, allFood, removeItem, removeAll, editItem };

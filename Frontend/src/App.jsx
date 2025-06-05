@@ -6,6 +6,7 @@ import Cart from './Pages/Cart/Cart.jsx'
 import PlaceOrder from './Pages/PlaceOrder/PlaceOrder.jsx'
 import Footer from './Component/Footer/Footer.jsx'
 import LoginPopup from './Component/LoginPopup/LoginPopup.jsx'
+import {ToastContainer} from 'react-toastify'
 
 const App = () => {
   const [Showlogin, setShowLogin] = useState(false);
@@ -23,6 +24,7 @@ const App = () => {
         </Routes>
       </div>
       <Footer />
+      <ToastContainer position="top-right" autoClose={3000} />
     </>
   )
 }

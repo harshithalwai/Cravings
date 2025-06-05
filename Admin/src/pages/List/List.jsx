@@ -6,9 +6,10 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 const List = () => {
+  const navigate = useNavigate();
   const [list, setList] = useState([]);
   const BACKEND_URL = import.meta.env.URL || "http://localhost:4000";
-  const removeItem = useCallback(async (id) => {
+  const removeItem = async (id) => {
     await axios
       .delete(`${BACKEND_URL}/food/remove/${id}`)
       .then((res) => {
@@ -23,8 +24,7 @@ const List = () => {
         console.error(err);
         toast.error(err.data.message);
       });
-  })
-
+  };
   const fetchData = async () => {
     axios
       .get(`${BACKEND_URL}/food/list/`)
@@ -42,7 +42,9 @@ const List = () => {
         toast.error(err.data.message);
       });
   };
-
+  const handelEdit = async (item) => {
+    navigate("/edit", { state: { item } });
+  }
   useEffect(() => {
     fetchData();
   }, []);
@@ -61,25 +63,39 @@ const List = () => {
             </tr>
           </thead>
           <tbody>
-            {
-              list.map((item, idx) => {
-                return (
-                  <tr key={idx} className="list-item-format">
-                    <td>
-                      <img src={`${BACKEND_URL}/images/${item.image}`} alt={item.name} />
-                    </td>
-                    <td>{item.name}</td>
-                    <td>{item.category}</td>
-                    <td>₹ {item.price}</td>
-                    <td>
-                      <button onClick={() => {
+            {list.map((item, idx) => {
+              return (
+                <tr key={idx} className="list-item-format">
+                  <td>
+                    <img
+                      src={`${BACKEND_URL}/images/${item.image}`}
+                      alt={item.name}
+                    />
+                  </td>
+                  <td>{item.name}</td>
+                  <td>{item.category}</td>
+                  <td>₹ {item.price}</td>
+                  <td className="action-btns">
+                    <button
+                      onClick={() => {
+                        handelEdit(item)
+                      }}
+                      className="edit-btn"
+                    >
+                      Edit
+                    </button>
+                    <button
+                      onClick={() => {
                         removeItem(item._id);
-                      }} className="dlt-btn">Delete</button>
-                    </td>
-                  </tr>
-                )
-              })
-            }
+                      }}
+                      className="dlt-btn"
+                    >
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       </div>

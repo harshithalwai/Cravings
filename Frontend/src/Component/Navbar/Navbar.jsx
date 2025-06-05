@@ -1,11 +1,20 @@
-import React, { useState,useContext } from "react";
+import React, { useState, useContext } from "react";
 import { assets } from "../../assets/frontend_assets/assets";
 import "./Navbar.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { StoreContext } from "../../context/storeContext.jsx";
+import { toast } from 'react-toastify';
 const Navbar = ({ setShowLogin }) => {
+    const Navigate = useNavigate();
     const [menu, setMenu] = useState("home");
-    const {getCartTotal} = useContext(StoreContext);
+
+    const { getCartTotal, token, setToken } = useContext(StoreContext);
+    const logout = () => {
+        localStorage.removeItem("token");
+        setToken("")
+        Navigate("/")
+        toast.success("Logged out successfully")
+    }
     return (
         <nav className="navbar">
             <Link to="/">
@@ -40,18 +49,32 @@ const Navbar = ({ setShowLogin }) => {
             <div className="navbar-right">
                 <img src={assets.search_icon} alt="Search Bar" />
                 <div className="navbar-search-icon">
-                    <Link to={getCartTotal()===0?"/":"/cart"}>
+                    <Link to={getCartTotal() === 0 ? "/" : "/cart"}>
                         <img src={assets.basket_icon} alt="Basket" />
-                        <div className={getCartTotal()===0?"":"dot"}></div>
+                        <div className={getCartTotal() === 0 ? "" : "dot"}></div>
                     </Link>
                 </div>
-                <button
-                    onClick={() => {
-                        setShowLogin(true);
-                    }}
-                >
-                    Sign in{" "}
-                </button>
+                {!token ? (
+                    <button
+                        onClick={() => {
+                            setShowLogin(true);
+                        }}
+                    >
+                        Sign in{" "}
+                    </button>
+                ) : (
+                    <div className="navbar-profile">
+                        <img src={assets.profile_icon} alt="User" />
+                        <ul className="nav-profile-dropdown">
+                            <li className="nav-profile-dropdown-item">
+                                <img src={assets.bag_icon} alt="" />Orders
+                            </li>
+                            <li className="nav-profile-dropdown-item" onClick={logout}>
+                                <img src={assets.logout_icon} alt="" />Logout
+                            </li>
+                        </ul>{" "}
+                    </div>
+                )}
             </div>
         </nav>
     );

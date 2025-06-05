@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import "./Add.css";
 import { assets } from "../../assets/admin_assets/assets.js";
 import { toast } from "react-toastify";
@@ -8,7 +8,7 @@ const Add = () => {
   const [image, setImage] = useState(false);
   const [data, setData] = useState({
     name: "",
-    description: "",
+    description: "Food provides essential nutrients for overall health and well-being",
     category: "",
     price: "",
   });
@@ -39,7 +39,7 @@ const Add = () => {
     if (responce.data.success) {
       setData({
         name: "",
-        description: "",
+        description: "Food provides essential nutrients for overall health and well-being",
         category: "",
         price: "",
       })
@@ -50,6 +50,19 @@ const Add = () => {
     }
 
   }
+    useEffect(() => {
+    const handleKey = (e) => {
+      if (e.key === "Enter" && e.target.tagName !== "TEXTAREA") {
+        e.preventDefault()
+        handelSubmit(e);
+      }
+    }
+
+    document.addEventListener("keydown", handleKey);
+    return ()=>{
+      document.removeEventListener("keydown", handleKey);
+    }
+  })
   return (
     <>
       <div className="add">
@@ -116,7 +129,7 @@ const Add = () => {
                 <option value="Cake">Cake</option>
                 <option value="Pure Veg">Pure Veg</option>
                 <option value="Pasta">Pasta</option>
-                <option value="Noodels">Noodels</option>
+                <option value="Noodles">Noodles</option>
               </select>
             </div>
             <div className="add-price flex-col">

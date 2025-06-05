@@ -12,26 +12,26 @@ const generateToken = (userId) => {
 const RegisterUser = async (req, res) => {
   const { name, email, password } = req.body;
   if (!name.trim() || !email.trim() || !password.trim()) {
-    return res.status(400).json({
+    return res.json({
       message: "All fields are required",
       success: false,
     });
   }
   const existUser = await userModel.findOne({ email });
   if (existUser) {
-    return res.status(400).json({
+    return res.json({
       message: "User already exists",
       success: false,
     });
   }
   if (!validator.isEmail(email)) {
-    return res.status(400).json({
+    return res.json({
       message: "Invalid email format",
       sucess: false,
     });
   }
   if (password.length < 8) {
-    return res.status(400).json({
+    return res.json({
       message: "Password must be between 8 and 20 characters",
       success: false,
     });
@@ -45,7 +45,7 @@ const RegisterUser = async (req, res) => {
       });
       const token = generateToken(user._id);
       res.status(201).json({
-        sucess: true,
+        success: true,
         message: "User registered successfully",
         token,
       });
@@ -59,7 +59,7 @@ const LoginUser = async (req, res) => {
   const { email, password } = req.body;
 
   if (!email.trim() || !password.trim()) {
-    return res.status(400).json({
+    return res.json({
       message: "All fields are required",
       success: false,
     });
@@ -68,7 +68,7 @@ const LoginUser = async (req, res) => {
   const user = await userModel.findOne({ email });
 
   if (!user) {
-    return res.status(400).json({
+    return res.json({
       message: "User does not exist",
       success: false,
     });
@@ -76,14 +76,14 @@ const LoginUser = async (req, res) => {
 
   bcrypt.compare(password, user.password, function (err, result) {
     if (err) {
-      return res.status(500).json({
+      return res.json({
         message: "Invalid credientials",
         success: false,
       });
     }
 
     if (!result) {
-      return res.status(400).json({
+      return res.json({
         message: "Invalid credientials",
         success: false,
       });
