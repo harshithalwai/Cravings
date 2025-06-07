@@ -5,10 +5,24 @@ import validator from "validator";
 
 const generateToken = (userId) => {
   return jwt.sign({ id: userId }, process.env.JWT_SECRET, {
-    expiresIn: "1h",
   });
 };
 
+const userList = async (req, res) => {
+  try {
+    const users = await userModel.find({}, "-password -__v");
+    res.status(200).json({
+      success: true,
+      message: "Users fetched successfully",
+      users,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Internal Server Error",
+    });
+  }
+}
 const RegisterUser = async (req, res) => {
   const { name, email, password } = req.body;
   if (!name.trim() || !email.trim() || !password.trim()) {
@@ -98,4 +112,4 @@ const LoginUser = async (req, res) => {
   });
 };
 
-export { RegisterUser, LoginUser };
+export { RegisterUser, LoginUser, userList };

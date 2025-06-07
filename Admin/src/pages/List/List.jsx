@@ -29,7 +29,6 @@ const List = () => {
     axios
       .get(`${BACKEND_URL}/food/list/`)
       .then((res) => {
-        console.log(res.data);
         if (res.data.success) {
           setList(res.data.foods);
           toast.success(res.data.message);

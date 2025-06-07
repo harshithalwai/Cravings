@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 
 const Cart = () => {
   const navigate = useNavigate();
-  const { cartItem, food_list, removeCartItem, getCartTotal,  BACKEND_URL } = useContext(StoreContext);
+  const { cartItem, food_list, removeCartItem, getCartTotal, BACKEND_URL } = useContext(StoreContext);
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, []);
@@ -13,10 +13,7 @@ const Cart = () => {
   if (!hasItems) {
     navigate("/");
   }
-useEffect(()=>{
-  console.log("Cart Items: ", cartItem);
-  
-},[cartItem, food_list])
+
   return (
     <>
       <div className="cart">
@@ -38,7 +35,7 @@ useEffect(()=>{
                   <p>{food.name}</p>
                   <p>&#8377; {food.price}</p>
                   <p>{cartItem[food._id]}</p>
-                  <p>&#8377; {getCartTotal()}</p>
+                  <p>&#8377; {food.price * cartItem[food._id]}</p>
                   <span
                     onClick={() => removeCartItem(food._id)}
                     className="removeBtn"

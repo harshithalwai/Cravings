@@ -5,7 +5,7 @@ import connectDB from "./config/DB.js";
 import foodRouter from "./routes/foodRoute.js";
 import userRouter from "./routes/userRoute.js";
 import cartRouter from "./routes/cartRoute.js";
-
+import orderRouter from "./routes/orderRoute.js";
 // App Config
 const app = express();
 
@@ -13,15 +13,7 @@ const app = express();
 dotenv.config({
   path: "./.env",
 });
-app.use(
-  cors({
-    origin: process.env.CORS_ORIGIN || "*",
-    credentials: process.env.CORS_CREDENTIALS || true,
-    methods: process.env.CORS_METHODS || "GET,HEAD,PUT,PATCH,POST,DELETE",
-    allowedHeaders:
-      process.env.CORS_ALLOWED_HEADERS || "Content-Type, Authorization",
-  })
-);
+app.use(cors());
 app.use(
   express.json({
     limit: process.env.JSON_LIMIT || "50mb",
@@ -35,15 +27,11 @@ app.use(
 app.use(
   express.urlencoded({
     extended: true,
-    limit: process.env.URLENCODED_LIMIT || "50mb",
-    verify: (req, res, buf) => {
-      req.rawBody = buf;
-    },
   })
 );
 
 app.use(express.static("public"));
-app.use("/images",express.static("uploads"));
+app.use("/images", express.static("uploads"));
 
 //MongoDB connection
 connectDB();
@@ -52,5 +40,6 @@ connectDB();
 app.use("/food", foodRouter);
 app.use("/user", userRouter);
 app.use("/cart", cartRouter);
+app.use("/order", orderRouter);
 
 export default app;

@@ -19,9 +19,12 @@ const userSchema = new mongoose.Schema(
       required: true,
       minlength: 8,
     },
-    cart: [{ type: mongoose.Schema.Types.ObjectId, ref: "Food" }],
+    cartData: {
+      type: Object,
+      default: {},
+    },
   },
-  { timestamp: true }
+  { minimize: true, timestamps: true }
 );
 
 const userModel = mongoose.models.User || mongoose.model("User", userSchema);
