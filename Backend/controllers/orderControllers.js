@@ -1,61 +1,142 @@
+
+// 4. FIXED: orderControllers.js - Improved validation and error handling
 import userModel from "../models/userModel.js"
 import orderModel from "../models/orderModel.js"
-import razorpay from "razorpay"
+import Razorpay from "razorpay"
+import crypto from "crypto" // ADDED: Missing import
+
+// Initialize Razorpay instance
+const razorpay = new Razorpay({
+    key_id: process.env.RAZORPAY_KEY_ID,
+    key_secret: process.env.RAZORPAY_KEY_SECRET
+})
 
 const placeOrder = async (req, res) => {
     try {
-        const frontend_url = "http://localhost:3000/"
-    
-        //creating an object/document for a new order 
+        const { items, amount, address, userId } = req.body;
+        
+        // FIXED: Better validation
+        if (!items || !Array.isArray(items) || items.length === 0) {
+            return res.status(400).json({
+                success: false,
+                message: "Items are required and must be a non-empty array"
+            });
+        }
+
+        if (!amount || amount <= 0) {
+            return res.status(400).json({
+                success: false,
+                message: "Valid amount is required"
+            });
+        }
+
+        if (!address || !address.trim()) {
+            return res.status(400).json({
+                success: false,
+                message: "Address is required"
+            });
+        }
+
+        // Verify user exists
+        const user = await userModel.findById(userId);
+        if (!user) {
+            return res.status(404).json({
+                success: false,
+                message: "User not found"
+            });
+        }
+
+        // Creating a new order 
         const newOrder = new orderModel({
-            userid: req.body.userId,
-            items: req.body.items,
-            amount: req.body.amount,
-            address: req.body.address
+            userId: userId,
+            items: items,
+            amount: amount,
+            address: address
         })
+        
         await newOrder.save()
-        // now as the order is laced so we will update the cart as a empty {}
-        await userModel.findByIdAndUpdate(req.body.userId, { cartData: {} })
+        
+        // Clear the user's cart after placing order
+        await userModel.findByIdAndUpdate(userId, { cartData: {} })
     
-        const line_items = req.body.items.map((item) => ({
-            price_data: {
-                currency: "inr",
-                product_data: {
-                    name: item.name
-                },
-                unit_amount: item.price * 100
-            },
-            quantity: item.quantity
-        }))
+        // Create Razorpay order
+        const options = {
+            amount: Math.round(amount * 100), // FIXED: Ensure integer
+            currency: "INR",
+            receipt: `order_${newOrder._id}`,
+            notes: {
+                orderId: newOrder._id.toString(),
+                userId: userId
+            }
+        }
     
-        line_items.push({
-            price_data: {
-                currency: "inr",
-                product_data: {
-                    name: "Delivery ch  arges"
-                },
-                unit_amount: 30 * 100
-            },
-            quantity: 1
-        })
-    
-        const session = await razorpay.checkout.sessions.create({
-            line_items: line_items,
-            mode: "payment",
-            success_url: `${frontend_url}/verify?success=true&orderId=${newOrder._id}`,
-            cancel_url: `${frontend_url}/verify?success=true&orderId=${newOrder._id}`
-        })
+        const razorpayOrder = await razorpay.orders.create(options)
     
         res.json({
-            success:true,
-            session_url:session.url
-        })  
+            success: true,
+            orderId: razorpayOrder.id,
+            amount: amount,
+            mongoOrderId: newOrder._id
+        })
+        
     } catch (error) {
-        res.json({
-            success:false,
-            message:"Something went wrong!"
+        console.error("Order placement error:", error);
+        res.status(500).json({
+            success: false,
+            message: "Something went wrong! " + error.message
         })
     }
 }
 
-export { placeOrder }
+const verifyPayment = async (req, res) => {
+    try {
+        const { razorpay_order_id, razorpay_payment_id, razorpay_signature, mongoOrderId } = req.body;
+        
+        if (!razorpay_order_id || !razorpay_payment_id || !razorpay_signature || !mongoOrderId) {
+            return res.status(400).json({
+                success: false,
+                message: "Missing required payment details"
+            });
+        }
+
+        // Verify payment signature
+        const expectedSignature = crypto
+            .createHmac('sha256', process.env.RAZORPAY_KEY_SECRET)
+            .update(razorpay_order_id + "|" + razorpay_payment_id)
+            .digest('hex');
+        
+        if (expectedSignature === razorpay_signature) {
+            // Payment is verified, update order status
+            const updatedOrder = await orderModel.findByIdAndUpdate(mongoOrderId, { 
+                payment: true,
+                status: "Order Confirmed"
+            }, { new: true });
+
+            if (!updatedOrder) {
+                return res.status(404).json({
+                    success: false,
+                    message: "Order not found"
+                });
+            }
+            
+            res.json({
+                success: true,
+                message: "Payment verified successfully",
+                order: updatedOrder
+            });
+        } else {
+            res.status(400).json({
+                success: false,
+                message: "Payment verification failed"
+            });
+        }
+    } catch (error) {
+        console.error("Payment verification error:", error);
+        res.status(500).json({
+            success: false,
+            message: "Payment verification error"
+        });
+    }
+}
+
+export { placeOrder, verifyPayment }
