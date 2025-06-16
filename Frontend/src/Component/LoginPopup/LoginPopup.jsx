@@ -37,8 +37,8 @@ const LoginPopup = ({ setShowLogin }) => {
   }
   return (
     <>
-      <div className="login-popup">
-        <form onSubmit={submitHandler} className="login-popup-container">
+      <div className="login-popup" onClick={() => setShowLogin(false)}>
+        <form onSubmit={submitHandler} onClick={(e) => e.stopPropagation()} className="login-popup-container">
           <div className="login-popup-title">
             <h2>{currentState}</h2>
             <img

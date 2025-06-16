@@ -5,15 +5,25 @@ import { Link, useNavigate } from "react-router-dom";
 import { StoreContext } from "../../context/storeContext.jsx";
 import { toast } from 'react-toastify';
 const Navbar = ({ setShowLogin }) => {
-    const Navigate = useNavigate();
+    const navigate = useNavigate();
     const [menu, setMenu] = useState("home");
 
-    const { getCartTotal, token, setToken } = useContext(StoreContext);
+    const { getCartTotal, token, setToken, setCartItem } = useContext(StoreContext);
     const logout = () => {
         localStorage.removeItem("token");
         setToken("")
-        Navigate("/")
+        setCartItem({})
+        navigate("/")
         toast.success("Logged out successfully")
+    }
+    const goToCart = () => {
+        if (token && getCartTotal() > 0) {
+            navigate("/cart")
+        } else {
+            navigate("/")
+            toast.info("Kindly join us !")
+            setShowLogin(true)
+        }
     }
     return (
         <nav className="navbar">
@@ -49,10 +59,12 @@ const Navbar = ({ setShowLogin }) => {
             <div className="navbar-right">
                 <img src={assets.search_icon} alt="Search Bar" />
                 <div className="navbar-search-icon">
-                    <Link to={getCartTotal() === 0 ? "/" : "/cart"}>
+                    <div
+                        onClick={goToCart}
+                    >
                         <img src={assets.basket_icon} alt="Basket" />
                         <div className={getCartTotal() === 0 ? "" : "dot"}></div>
-                    </Link>
+                    </div>
                 </div>
                 {!token ? (
                     <button

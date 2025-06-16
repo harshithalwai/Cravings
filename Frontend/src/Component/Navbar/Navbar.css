@@ -78,6 +78,9 @@ nav.navbar {
   border: 1px solid tomato;
   outline: 2px solid white;
 }
+.navbar-search-icon{
+  cursor: pointer;
+}
 .nav-profile-dropdown-item{
   display: flex;
   align-items: center;

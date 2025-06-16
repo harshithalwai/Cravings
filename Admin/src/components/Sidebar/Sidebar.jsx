@@ -36,10 +36,7 @@ const Sidebar = () => {
             <img src={assets.order_icon} alt="" />
             <p>List items</p>
           </NavLink>
-          <NavLink to="/order" className="sidebar-option">
-            <img src={assets.order_icon} alt="" />
-            <p>Orders</p>
-          </NavLink>
+         
           <div className="sidebar-option" onClick={removeAll}>
             <img src={assets.remove_image} className="remove_img" alt="" />
             <p>Remove All</p>
