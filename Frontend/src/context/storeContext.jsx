@@ -4,7 +4,7 @@ export const StoreContext = createContext(null);
 
 const StoreContextProvider = (props) => {
   const [cartItem, setCartItem] = useState({});
-  const BACKEND_URL = "http://localhost:4000"
+  const BACKEND_URL = "https://cravings-backend.vercel.app/"
   const [token, setToken] = useState("")
   const [food_list, setFoodList] = useState([])
   const fetchData = async () => {
