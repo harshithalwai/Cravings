@@ -16,4 +16,4 @@ export const assets ={
     remove_image
 }
 
-export const url = 'http://localhost:4000'
+export const url = 'https://cravings-backend.vercel.app/'

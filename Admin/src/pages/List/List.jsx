@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 const List = () => {
   const navigate = useNavigate();
   const [list, setList] = useState([]);
-  const BACKEND_URL = import.meta.env.URL || "http://localhost:4000";
+  const BACKEND_URL = import.meta.env.URL || "https://cravings-backend.vercel.app/";
   const removeItem = async (id) => {
     await axios
       .delete(`${BACKEND_URL}/food/remove/${id}`)

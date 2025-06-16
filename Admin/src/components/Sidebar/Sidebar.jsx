@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 
 const Sidebar = () => {
   const navigate = useNavigate();
-  const BACKEND_URL = import.meta.env.URL || "http://localhost:4000";
+  const BACKEND_URL = import.meta.env.URL || "https://cravings-backend.vercel.app/";
   const removeAll = async () => {
     axios.delete(`${BACKEND_URL}/food/removeAll`)
       .then((res) => {

@@ -33,7 +33,7 @@ const Edit = () => {
     }
   })
     //backend URL
-    const BACKEND_URL = import.meta.env.URL || "http://localhost:4000";
+    const BACKEND_URL = import.meta.env.URL || "https://cravings-backend.vercel.app/";
     //state for image and data
     const [image, setImage] = useState(false);
     const [data, setData] = useState({

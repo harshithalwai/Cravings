@@ -4,7 +4,7 @@ import { assets } from "../../assets/admin_assets/assets.js";
 import { toast } from "react-toastify";
 import axios from "axios";
 const Add = () => {
-  const BACKEND_URL = import.meta.env.URL || "http://localhost:4000";
+  const BACKEND_URL = import.meta.env.URL || "https://cravings-backend.vercel.app/";
   const [image, setImage] = useState(false);
   const [data, setData] = useState({
     name: "",
