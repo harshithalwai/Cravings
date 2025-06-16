@@ -1,13 +1,13 @@
-import usermodel from '../models/userModel.js';
+import usermodel from "../models/userModel.js";
 
-const addToCart=async(req,res)=>{
+const addToCart = async (req, res) => {
     res.send("Add to cart functionality is not implemented yet.");
-}
-const removeFromCart=async(req,res)=>{
+};
+const removeFromCart = async (req, res) => {
     res.send("Add to cart functionality is not implemented yet.");
-}
-const getCartItems=async(req,res)=>{
+};
+const getCartItems = async (req, res) => {
     res.send("Add to cart functionality is not implemented yet.");
-}
+};
 
-export {addToCart, removeFromCart, getCartItems};
+export { addToCart, removeFromCart, getCartItems };

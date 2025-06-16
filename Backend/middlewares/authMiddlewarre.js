@@ -8,6 +8,7 @@ const authMiddleware = (req, res, next) => {
       message: "Please login first",
     });
   }
+  
   else{
     try{
         const decoded =jwt.verify(token,process.env.JWT_SECRET);

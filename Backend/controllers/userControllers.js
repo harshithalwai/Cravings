@@ -53,9 +53,7 @@ const RegisterUser = async (req, res) => {
   });
 };
 
-
 const LoginUser = async (req, res) => {
-
   const { email, password } = req.body;
 
   if (!email.trim() || !password.trim()) {
