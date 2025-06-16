@@ -1,5 +1,5 @@
 import express from "express";
-import authMiddleware from "../middlewares/authMiddlewarre.js";
+import authMiddleware from "../middlewares/authMiddleware.js";
 import {
   addToCart,
   removeFromCart,
@@ -8,8 +8,8 @@ import {
 import asyncHandler from "../utils/asyncHandler.js";
 const cartRouter = express.Router();
 
-cartRouter.get("/add",authMiddleware, asyncHandler(addToCart));
-cartRouter.get("/remove", authMiddleware, asyncHandler(removeFromCart));
-cartRouter.get("/items", authMiddleware, asyncHandler(getCartItems));
+cartRouter.post("/add",authMiddleware, asyncHandler(addToCart));
+cartRouter.post("/remove", authMiddleware, asyncHandler(removeFromCart));
+cartRouter.post("/items", authMiddleware, asyncHandler(getCartItems));
 
 export default cartRouter;
